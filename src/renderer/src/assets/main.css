@@ -1,0 +1,354 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-image: url('./images/background.png');
+  background-size: cover;
+  user-select: none;
+  width: 100%;
+
+  /* Color Variables */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-gray: #d2c5cb;
+  --color-transparent: transparent;
+  --color-light-pink: #dfadb9;
+  --color-pink: #dd3e88;
+  --color-white-80: rgba(255, 255, 255, 0.8);
+  --color-white-60: rgba(255, 255, 255, 0.6);
+  --color-white-50: rgba(255, 255, 255, 0.5);
+  --color-white-20: rgba(255, 255, 255, 0.2);
+  --color-white-10: rgba(255, 255, 255, 0.1);
+  --color-error: #ffced7;
+
+  /* Font size variables */
+  --font-size-32: 32px;
+  --font-size-20: 20px;
+  --font-size-16: 16px;
+  --font-size-14: 14px;
+}
+
+#root {
+  flex: 1;
+}
+
+@font-face {
+  font-family: 'Dynapuff';
+  src: url('./fonts/dynapuff.bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Container Classes */
+.background-layout {
+  width: 100%;
+  height: 100vh;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.padded-top-content {
+  padding-top: 128px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Typography */
+h1.h1 {
+  font-family: 'Dynapuff', cursive;
+  font-size: var(--font-size-32);
+  color: var(--color-white);
+  text-align: center;
+  line-height: 40px;
+  margin: 0;
+}
+
+h2.h2 {
+  font-family: 'Dynapuff', cursive;
+  font-size: var(--font-size-20);
+  color: var(--color-white);
+  line-height: 28px;
+  margin: 0;
+}
+
+.body1 {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--font-size-16);
+  color: var(--color-white);
+  margin: 0;
+  text-align: center;
+  font-weight: 300;
+}
+
+.body2 {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--font-size-14);
+  color: var(--color-white);
+  margin: 0;
+}
+
+.bold-body2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: var(--font-size-14);
+  color: var(--color-white);
+  margin-left: 4px;
+  margin: 0;
+}
+
+.body3 {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--font-size-14);
+  color: var(--color-white);
+  margin: 0;
+  font-weight: 300;
+}
+
+/* Component Classes */
+/* Text / Password Input */
+.text-input, .password-input {
+  width: 100%;
+  height: 56px;
+  background-color: var(--color-white-10);
+  border-radius: 16px;
+  border: 1px solid var(--color-white-20);
+  padding: 0 16px;
+  font-size: var(--font-size-16);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: var(--color-white);
+  box-sizing: border-box;
+  outline: none;
+}
+
+.text-input::placeholder, .password-input::placeholder {
+  color: var(--color-white-50);
+}
+
+.text-input-container, .password-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-input-container .password-input {
+  padding-right: 48px; /* Make space for the icon */
+}
+
+.password-toggle-button {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white-50);
+  transition: color 0.1s;
+}
+
+.password-toggle-button:hover {
+  color: var(--color-white);
+}
+
+/* Buttons */
+.large-button {
+  width: 100%;
+  min-height: 56px;
+  background-color: var(--color-white);
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.1s;
+}
+
+.large-button:active,
+.inverted-icon-button:active,
+.fitted-button:active {
+  opacity: 0.9;
+  transform: scale(0.98);
+}
+
+.large-button:disabled,
+.inverted-icon-button:disabled,
+.fitted-button:disabled {
+  background-color: var(--color-gray);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-size-16);
+  color: var(--color-black);
+  line-height: 20px;
+}
+
+.fitted-button, .inverted-icon-button {
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.1s;
+  font-size: var(--font-size-16);
+}
+
+.fitted-button {
+  background-color: var(--color-white);
+}
+
+.inverted-icon-button {
+  background-color: var(--color-pink);
+}
+
+/* Input Error */
+.input-error-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.input-error-text {
+  color: var(--color-error);
+  font-size: var(--font-size-14);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Loading spinner */
+.spinner-icon {
+  animation: spin 1s linear infinite;
+  display: block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Search input */
+.searchContainer {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-white-10);
+  border: 1px solid var(--color-white-20);
+  border-radius: 16px;
+  padding: 0 16px;
+  height: 56px;
+  margin-bottom: 24px;
+  gap: 12px;
+}
+
+.searchInput {
+    background: none;
+    border: none;
+    outline: none;
+    flex: 1;
+    color: var(--color-white);
+    font-family: 'Inter', sans-serif;
+    font-size: var(--font-size-16);
+}
+
+.searchInput::placeholder {
+  color: var(--color-white-60);
+  opacity: 1;
+}
+
+/* Option Slider */
+.option-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+}
+
+/* Checkbox (Button) Styles */
+.option-checkbox {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 2px solid var(--color-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s ease;
+}
+
+.option-checkbox.checked {
+  background-color: var(--color-white);
+}
+
+.option-checkbox-text {
+  color: var(--color-black);
+}
+
+/* Label Styles */
+.option-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--color-white);
+  min-width: 80px;
+  user-select: none;
+}
+
+/* Range Slider Styles */
+.option-slider {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 1;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+  background: transparent;
+}
+
+/* The Thumb (Handle) */
+.option-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--color-white);
+  cursor: pointer;
+  margin-top: -8px; /* Vertically centers thumb on the track */
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+/* The Track (Bar) */
+.option-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: var(--color-white-20);
+  border-radius: 2px;
+}
+
+.option-slider:focus {
+  outline: none;
+}
