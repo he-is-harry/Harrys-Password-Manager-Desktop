@@ -1,5 +1,6 @@
 import { ElectronAPI } from '@electron-toolkit/preload';
 import { PasswordGeneratorOptions } from '@he-is-harry/harrys-password-manager-core-napi';
+import { QRCodeInfo } from '../main/sync/connection';
 
 interface IHarrysPasswordManagerAPI {
   auth: {
@@ -18,6 +19,14 @@ interface IHarrysPasswordManagerAPI {
     generatePassword: (
       options: PasswordGeneratorOptions
     ) => Promise<{ success: boolean; data?: string; error?: string }>;
+  };
+  connection: {
+    startSynchronizerServer: (vaultKey: Buffer) => Promise<QRCodeInfo>;
+    connectToSynchronizerServer: (qrCodeInfo: QRCodeInfo, vaultKey: Buffer) => Promise<void>;
+    stopSynchronizerConnections: () => Promise<void>;
+    // Returns an unsubscribe function to remove the device connected listener
+    onDeviceConnected: (callback: () => void) => () => void;
+    onSyncComplete: (callback: () => void) => () => void;
   };
 }
 

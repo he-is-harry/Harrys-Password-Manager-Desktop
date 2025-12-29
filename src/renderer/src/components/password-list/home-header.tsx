@@ -1,5 +1,6 @@
 import { CSSProperties } from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';
+import { DrawerButton } from '../layout/drawer-button';
 
 interface HomeHeaderProps {
   onAdd: () => void;
@@ -9,9 +10,12 @@ interface HomeHeaderProps {
 export function HomeHeader({ onAdd, onSignOut }: HomeHeaderProps): React.JSX.Element {
   return (
     <div style={styles.container}>
-      <h2 className="h2" style={styles.heading}>
-        Harry&apos;s Password Manager
-      </h2>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <DrawerButton />
+        <h2 className="h2" style={styles.heading}>
+          Harry&apos;s Password Manager
+        </h2>
+      </div>
       <div style={styles.actions}>
         <button className="fitted-button" onClick={onAdd}>
           <span style={{ color: 'var(--color-pink)' }}>+ Add</span>

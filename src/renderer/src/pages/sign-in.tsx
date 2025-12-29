@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useSession } from '../components/auth/auth-context';
-import { BackgroundLayout } from '../components/background-layout';
+import { BackgroundLayout } from '../components/layout/background-layout';
 import { PasswordInput } from '../components/common/password-input';
 import { InputError } from '../components/common/input-error';
 import { LargeButton } from '../components/common/large-button';

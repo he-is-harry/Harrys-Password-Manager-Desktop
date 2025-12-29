@@ -4,7 +4,8 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon_rounded.png?asset';
 import { setupAuthHandlers } from './auth';
 import { initDatabase } from './db/store';
-import { setupPassmanHandlers } from './passman';
+import { setupPassmanHandlers } from './passman/passman';
+import { setupConnectionHandlers } from './sync/connection';
 
 function createWindow(): void {
   // Create the browser window.
@@ -46,6 +47,7 @@ app.whenReady().then(async () => {
   await initDatabase();
   setupAuthHandlers();
   setupPassmanHandlers();
+  setupConnectionHandlers();
 
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron');

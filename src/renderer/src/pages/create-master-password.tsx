@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useSession } from '../components/auth/auth-context';
-import { BackgroundLayout } from '../components/background-layout';
+import { BackgroundLayout } from '../components/layout/background-layout';
 import { PasswordInput } from '../components/common/password-input';
 import { LargeButton } from '../components/common/large-button';
 

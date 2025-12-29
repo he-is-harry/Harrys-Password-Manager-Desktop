@@ -3,7 +3,7 @@ import { IoSearch } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
 import { useSession } from '../components/auth/auth-context';
-import { BackgroundLayout } from '../components/background-layout';
+import { BackgroundLayout } from '../components/layout/background-layout';
 import { HomeHeader } from '../components/password-list/home-header';
 import { ListRow } from '../components/password-list/list-row';
 

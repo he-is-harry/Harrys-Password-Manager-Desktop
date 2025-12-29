@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
 import { PasswordGeneratorOptions } from '@he-is-harry/harrys-password-manager-core-napi';
+import { QRCodeInfo } from '../main/sync/connection';
 
 // Create the implementation
 const api = {
@@ -23,6 +24,30 @@ const api = {
     deletePassword: (id: string) => ipcRenderer.invoke('passman:delete-password', id),
     generatePassword: (options: PasswordGeneratorOptions) =>
       ipcRenderer.invoke('passman:generate-password', options)
+  },
+  connection: {
+    startSynchronizerServer: (vaultKey: Buffer) =>
+      ipcRenderer.invoke('connection:start-synchronizer-server', vaultKey),
+    connectToSynchronizerServer: (qrCodeInfo: QRCodeInfo, vaultKey: Buffer) =>
+      ipcRenderer.invoke('connection:connect-to-synchronizer-server', qrCodeInfo, vaultKey),
+    stopSynchronizerConnections: () =>
+      ipcRenderer.invoke('connection:stop-synchronizer-connections'),
+    onDeviceConnected: (callback: () => void) => {
+      const subscription = (): void => callback();
+      ipcRenderer.on('connection:device-connected', subscription);
+      // Return a unsubscribe function
+      return () => {
+        ipcRenderer.removeListener('connection:device-connected', subscription);
+      };
+    },
+    onSyncComplete: (callback: () => void) => {
+      const subscription = (): void => callback();
+      ipcRenderer.on('connection:sync-complete', subscription);
+      // Return a unsubscribe function
+      return () => {
+        ipcRenderer.removeListener('connection:sync-complete', subscription);
+      };
+    }
   }
 };
 

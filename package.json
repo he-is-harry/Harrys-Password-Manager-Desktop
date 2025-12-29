@@ -20,12 +20,17 @@
     "build:mac": "electron-vite build && electron-builder --mac",
     "build:linux": "electron-vite build && electron-builder --linux"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/he-is-harry/Harrys-Password-Manager-Desktop.git"
+  },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
     "@he-is-harry/harrys-password-manager-core-napi": "link:../Harrys-Password-Manager-Core/bindings/napi-rs",
     "better-sqlite3": "^12.5.0",
-    "electron-updater": "^6.3.9",
+    "html5-qrcode": "^2.3.8",
+    "qrcode": "^1.5.4",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.10.1",
     "tinybase": "^7.0.1"
@@ -39,6 +44,7 @@
     "@types/node": "^22.19.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "@types/ws": "^8.18.1",
     "@vitejs/plugin-react": "^5.1.1",
     "electron": "^39.2.6",
     "electron-builder": "^26.0.12",

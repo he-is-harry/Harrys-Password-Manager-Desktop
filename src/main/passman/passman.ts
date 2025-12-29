@@ -1,13 +1,12 @@
 import {
-  EncryptedPassword,
   encryptPassword,
-  decryptPassword as coreDecryptPassword,
   generatePassword as coreGeneratePassword,
   PasswordGeneratorOptions
 } from '@he-is-harry/harrys-password-manager-core-napi';
-import { store, queries } from './db/store';
-import { KEY_TYPE, SecureStore } from './secure-storage';
+import { store, queries } from '../db/store';
+import { KEY_TYPE, SecureStore } from '../secure-storage';
 import { ipcMain } from 'electron';
+import { decryptPasswordInternal } from './passman-internal';
 
 export function savePassword(name: string, password: string, vaultKey: Buffer, id?: string): void {
   // 1. Obtain the encryption key
@@ -35,7 +34,8 @@ export function savePassword(name: string, password: string, vaultKey: Buffer, i
   if (id) {
     store.setRow('passwords', id, rowData);
   } else {
-    store.addRow('passwords', rowData);
+    const newRowId = crypto.randomUUID();
+    store.setRow('passwords', newRowId, rowData);
   }
 }
 
@@ -60,52 +60,20 @@ export function searchPasswords(searchText: string): PasswordRow[] {
   }));
 }
 
-export async function decryptPassword(id: string, vaultKey: Buffer): Promise<string> {
+export function decryptPassword(id: string, vaultKey: Buffer): string {
   const row = store.getRow('passwords', id);
   if (!row) {
     throw new Error('Password not found');
   }
 
-  if (
-    row.argon2Salt === undefined ||
-    row.hkdfSalt === undefined ||
-    row.kemCiphertext === undefined ||
-    row.kemNonce === undefined ||
-    row.passwordCiphertext === undefined ||
-    row.passwordNonce === undefined
-  ) {
-    throw new Error('Malformed password row');
-  }
-
-  // 1. Obtain the encryption key
+  // 1. Obtain the decryption key
   const deviceDecryptionKey = SecureStore.getKey(KEY_TYPE.DECRYPTION_KEY);
   if (!deviceDecryptionKey) {
     throw new Error('Decryption key not found');
   }
 
   // 2. Decrypt the password using Harry's Password Manager Core.
-  const argon2Salt = Buffer.from(row.argon2Salt, 'base64');
-  const hkdfSalt = Buffer.from(row.hkdfSalt, 'base64');
-  const kemCiphertext = Buffer.from(row.kemCiphertext, 'base64');
-  const kemNonce = Buffer.from(row.kemNonce, 'base64');
-  const passwordCiphertext = Buffer.from(row.passwordCiphertext, 'base64');
-  const passwordNonce = Buffer.from(row.passwordNonce, 'base64');
-  const encryptedPassword = new EncryptedPassword(
-    argon2Salt,
-    hkdfSalt,
-    kemNonce,
-    kemCiphertext,
-    passwordNonce,
-    passwordCiphertext
-  );
-
-  const decryptedPasswordBytes = coreDecryptPassword(
-    vaultKey,
-    deviceDecryptionKey,
-    encryptedPassword
-  );
-
-  return new TextDecoder().decode(decryptedPasswordBytes);
+  return decryptPasswordInternal(row, vaultKey, deviceDecryptionKey);
 }
 
 export function deletePassword(id: string): void {

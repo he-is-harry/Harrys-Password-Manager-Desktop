@@ -1,5 +1,5 @@
 import { useSession } from '@renderer/components/auth/auth-context';
-import { BackgroundLayout } from '@renderer/components/background-layout';
+import { BackgroundLayout } from '@renderer/components/layout/background-layout';
 import { PasswordForm } from '@renderer/components/password-form/password-form';
 import { CSSProperties } from 'react';
 import { IoArrowBack } from 'react-icons/io5';
