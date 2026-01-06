@@ -13,3 +13,6 @@ venv/
 
 # Environment variables
 .env
+
+# Release notes
+docs/release-notes
